@@ -5,6 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ContentRepository @Inject constructor(
-    webservice: ContentWebservice
-)
+class AddressRepository @Inject constructor(
+    private val webservice: ContentWebservice
+) {
+}
