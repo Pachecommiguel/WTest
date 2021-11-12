@@ -6,7 +6,7 @@
     <data>
         <variable
             name="address"
-            type="com.example.wtest.model.Address" />
+            type="com.example.wtest.persistence.entities.Address" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

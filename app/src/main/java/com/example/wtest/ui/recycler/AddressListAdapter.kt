@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.wtest.databinding.AddressRecyclerViewItemBinding
-import com.example.wtest.model.Address
+import com.example.wtest.persistence.entities.Address
 
 class AddressListAdapter : ListAdapter<Address, AddressViewHolder>(AddressDiffCallback()) {
 

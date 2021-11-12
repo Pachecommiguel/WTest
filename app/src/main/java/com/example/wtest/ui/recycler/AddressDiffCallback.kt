@@ -1,7 +1,7 @@
 package com.example.wtest.ui.recycler
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.wtest.model.Address
+import com.example.wtest.persistence.entities.Address
 
 class AddressDiffCallback : DiffUtil.ItemCallback<Address>() {
     override fun areItemsTheSame(oldItem: Address, newItem: Address): Boolean {
