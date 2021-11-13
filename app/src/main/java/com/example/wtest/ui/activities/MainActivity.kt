@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.addressList.observe(this, {
             listAdapter.submitList(it)
             val fragment = supportFragmentManager.findFragmentByTag(LoadingLayerFragment.TAG)
-            if (fragment != null) {
+            if (fragment != null && it.isNotEmpty()) {
                 supportFragmentManager.beginTransaction().remove(fragment).commit()
             }
         })
