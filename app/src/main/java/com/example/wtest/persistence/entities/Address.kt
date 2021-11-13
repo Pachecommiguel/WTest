@@ -5,8 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Address(
+    var fourDigits: String?,
+    var threeDigits: String?,
+    var location: String?
+) {
     @PrimaryKey(autoGenerate = true)
-    var key: Int,
-    var zipCode: String,
-    var location: String
-)
+    var key: Int = 0
+}

@@ -5,10 +5,10 @@ import com.example.wtest.persistence.entities.Address
 
 class AddressDiffCallback : DiffUtil.ItemCallback<Address>() {
     override fun areItemsTheSame(oldItem: Address, newItem: Address): Boolean {
-        TODO("Not yet implemented")
+        return oldItem.key == newItem.key
     }
 
     override fun areContentsTheSame(oldItem: Address, newItem: Address): Boolean {
-        TODO("Not yet implemented")
+        return oldItem == newItem
     }
 }

@@ -4,14 +4,16 @@ import com.example.wtest.persistence.db.DbManager
 import com.example.wtest.utils.Decoder
 import com.example.wtest.utils.Preferences
 import com.example.wtest.web.WebManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AddressRepository @Inject constructor(
-    private val preferences: Preferences,
     private val dbManager: DbManager,
-    webManager: WebManager
+    webManager: WebManager,
+    preferences: Preferences
 ) : ContentReceiver {
     val addressList = dbManager.dao.getAll()
 
@@ -24,6 +26,8 @@ class AddressRepository @Inject constructor(
     }
 
     override fun onNewContent(content: String?) {
-        val content = Decoder.decode(content)
+        Decoder.decode(content).forEach {
+            GlobalScope.launch { dbManager.insert(it) }
+        }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.wtest.web
 
 import com.example.wtest.persistence.ContentReceiver
-import com.example.wtest.web.responses.ContentResponse
+import com.example.wtest.web.responses.BlobResponse
 import com.example.wtest.web.responses.TreeResponse
-import com.example.wtest.web.ws.ContentWebservice
+import com.example.wtest.web.ws.BlobWebservice
 import com.example.wtest.web.ws.TreeWebservice
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,9 +11,9 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class WebManager @Inject constructor(
-    private val contentWs: ContentWebservice,
+    private val blobWs: BlobWebservice,
     private val treeWs: TreeWebservice
-){
+) {
 
     private lateinit var receiver: ContentReceiver
 
@@ -47,15 +47,15 @@ class WebManager @Inject constructor(
     }
 
     private fun getContent(sha: String) {
-        contentWs.getContent(OWNER, REPO, sha).enqueue(object : Callback<ContentResponse> {
+        blobWs.getBlob(OWNER, REPO, sha).enqueue(object : Callback<BlobResponse> {
             override fun onResponse(
-                call: Call<ContentResponse>,
-                response: Response<ContentResponse>
+                call: Call<BlobResponse>,
+                response: Response<BlobResponse>
             ) {
                 receiver.onNewContent(response.body()?.content)
             }
 
-            override fun onFailure(call: Call<ContentResponse>, t: Throwable) {
+            override fun onFailure(call: Call<BlobResponse>, t: Throwable) {
                 getContent(sha)
             }
         })
