@@ -1,8 +1,7 @@
 package com.example.wtest.di.modules
 
-import androidx.lifecycle.LiveData
-import com.example.wtest.persistence.entities.Address
-import com.example.wtest.persistence.db.AddressDao
+import com.example.wtest.web.RetrofitApp
+import com.example.wtest.web.ws.TreeWebservice
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,9 +10,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AddressListLiveDataModule {
+object TreeWebserviceModule {
 
     @Singleton
     @Provides
-    fun provideAddressListLiveData(dao: AddressDao): LiveData<List<Address>> = dao.getAll()
+    fun provideTreeWebservice(): TreeWebservice = RetrofitApp.getInstance()
+        .create(TreeWebservice::class.java)
 }
