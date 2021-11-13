@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -14,10 +14,34 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/fourDigits"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEsyte"
+            android:text="@{address.fourDigits + '-'}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/threeDigits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{address.threeDigits}"
+            app:layout_constraintBottom_toBottomOf="@+id/fourDigits"
+            app:layout_constraintStart_toEndOf="@+id/fourDigits"
+            app:layout_constraintTop_toTopOf="@+id/fourDigits">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{address.location}"
+            app:layout_constraintBottom_toBottomOf="@+id/threeDigits"
+            app:layout_constraintStart_toEndOf="@+id/threeDigits"
+            app:layout_constraintTop_toTopOf="@+id/threeDigits">
 
         </TextView>
 

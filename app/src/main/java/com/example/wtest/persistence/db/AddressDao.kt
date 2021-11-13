@@ -13,5 +13,5 @@ interface AddressDao {
     fun getAll(): LiveData<List<Address>>
 
     @Insert
-    fun insert(address: Address)
+    fun insertAll(address: List<Address>)
 }

@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wtest.databinding.ActivityMainBinding
+import com.example.wtest.ui.fragments.LoadingLayerFragment
 import com.example.wtest.ui.recycler.AddressListAdapter
 import com.example.wtest.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,14 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-        viewModel.addressList.observe(this, listAdapter::submitList)
+        supportFragmentManager.beginTransaction().add(android.R.id.content, LoadingLayerFragment(), LoadingLayerFragment.TAG).commit()
+
+        viewModel.addressList.observe(this, {
+            listAdapter.submitList(it)
+            val fragment = supportFragmentManager.findFragmentByTag(LoadingLayerFragment.TAG)
+            if (fragment != null) {
+                supportFragmentManager.beginTransaction().remove(fragment).commit()
+            }
+        })
     }
 }

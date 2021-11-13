@@ -6,7 +6,12 @@ import javax.inject.Inject
 class DbManager @Inject constructor(
     val dao: AddressDao
 ) {
-    fun insert(address: List<String>?) {
-        dao.insert(Address(address?.get(0), address?.get(1), address?.get(2)))
+
+    fun insertAll(list: List<List<String>?>) {
+        dao.insertAll(
+            list.map {
+                Address(it?.get(0), it?.get(1), it?.get(2))
+            }
+        )
     }
 }

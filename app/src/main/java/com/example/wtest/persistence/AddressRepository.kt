@@ -12,8 +12,8 @@ import javax.inject.Singleton
 @Singleton
 class AddressRepository @Inject constructor(
     private val dbManager: DbManager,
-    webManager: WebManager,
-    preferences: Preferences
+    private val preferences: Preferences,
+    webManager: WebManager
 ) : ContentReceiver {
     val addressList = dbManager.dao.getAll()
 
@@ -26,8 +26,7 @@ class AddressRepository @Inject constructor(
     }
 
     override fun onNewContent(content: String?) {
-        Decoder.decode(content).forEach {
-            GlobalScope.launch { dbManager.insert(it) }
-        }
+        preferences.setFirstTimeLaunch(false)
+        GlobalScope.launch { dbManager.insertAll(Decoder.decode(content)) }
     }
 }
