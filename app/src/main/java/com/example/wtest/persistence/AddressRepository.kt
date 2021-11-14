@@ -4,6 +4,7 @@ import com.example.wtest.persistence.db.DbManager
 import com.example.wtest.persistence.entities.Address
 import com.example.wtest.utils.Decoder
 import com.example.wtest.utils.PreferencesManager
+import com.example.wtest.utils.RegexUtil
 import com.example.wtest.web.WebManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,20 +35,23 @@ class AddressRepository @Inject constructor(
         GlobalScope.launch { dbManager.insertAll(Decoder.decodeFromBase64(content)) }
     }
 
-    // TODO: 11/14/2021 change this
     fun getAddress(newText: String): List<Address> {
         val collator = Collator.getInstance()
-        val text = newText.uppercase().trim()
-        val digits = text.replace("-", " ").split("\\s".toRegex())
-        val locationRegex = "[a-zA-Z[:blank:]]+".toRegex()
-        val location = locationRegex.find(text)?.value ?: ""
         val resultList = mutableListOf<Address>()
+        val digits = RegexUtil.getDigits(newText)
+        val location = RegexUtil.getLocation(newText)
 
         collator.strength = Collator.NO_DECOMPOSITION
 
         addressList.value?.forEach { address ->
-            digits.forEach {
-                if (address.threeDigits == it || address.fourDigits == it || collator.compare(address.location, location) == 0) {
+            if (digits.contains(address.fourDigits) && digits.contains(address.threeDigits)) {
+                resultList.add(address)
+            } else if (digits.size == 1 && (digits.contains(address.fourDigits) || digits.contains(address.threeDigits))) {
+                resultList.add(address)
+            }
+
+            if (location?.isNotEmpty() == true) {
+                if (collator.compare(location, address.location) == 0) {
                     resultList.add(address)
                 }
             }
