@@ -36,27 +36,29 @@ class AddressRepository @Inject constructor(
     }
 
     fun getAddress(newText: String): List<Address> {
-        val collator = Collator.getInstance()
         val resultList = mutableListOf<Address>()
         val digits = RegexUtil.getDigits(newText)
         val location = RegexUtil.getLocation(newText)
-
+        val collator = Collator.getInstance()
         collator.strength = Collator.NO_DECOMPOSITION
 
-        addressList.value?.forEach { address ->
-            if (digits.contains(address.fourDigits) && digits.contains(address.threeDigits)) {
-                resultList.add(address)
-            } else if (digits.size == 1 && (digits.contains(address.fourDigits) || digits.contains(address.threeDigits))) {
-                resultList.add(address)
-            }
-
-            if (location?.isNotEmpty() == true) {
-                if (collator.compare(location, address.location) == 0) {
-                    resultList.add(address)
-                }
+        addressList.value?.forEach {
+            if (containsDigits(it, digits) && (location.isNullOrBlank() || containsLocation(location, it.location, collator))) {
+                resultList.add(it)
+            } else if (digits.isNullOrEmpty() && containsLocation(location, it.location, collator)) {
+                resultList.add(it)
             }
         }
 
         return resultList
+    }
+
+    private fun containsLocation(locationReg: String?, location: String?, collator: Collator): Boolean {
+        return locationReg?.isNotEmpty() == true && collator.compare(locationReg, location) == 0
+    }
+
+    private fun containsDigits(address: Address, digits: List<String>): Boolean {
+        return (digits.contains(address.fourDigits) && digits.contains(address.threeDigits)) ||
+                digits.size == 1 && (digits.contains(address.fourDigits) || digits.contains(address.threeDigits))
     }
 }

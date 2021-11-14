@@ -1,20 +1,18 @@
 package com.example.wtest.utils
 
-abstract class RegexUtil {
+object RegexUtil {
 
-    companion object {
-        fun getDigits(newText: String): List<String> {
-            val text = newText.uppercase().trim()
-            val digitsRegex = "[0-9]+".toRegex()
+    fun getDigits(newText: String): List<String> {
+        val text = newText.uppercase().trim()
+        val digitsRegex = "[0-9]+".toRegex()
 
-            return digitsRegex.findAll(text).map { it.value }.toList()
-        }
+        return digitsRegex.findAll(text).map { it.value }.toList()
+    }
 
-        fun getLocation(newText: String): String? {
-            val text = newText.uppercase().trim()
-            val locationRegex = "[A-ZÀ-ú[:blank:]]+".toRegex()
+    fun getLocation(newText: String): String? {
+        val text = newText.uppercase().trim()
+        val locationRegex = "[A-ZÀ-ú\\s]+".toRegex()
 
-            return locationRegex.find(text)?.value
-        }
+        return locationRegex.find(text)?.value?.trim()
     }
 }
