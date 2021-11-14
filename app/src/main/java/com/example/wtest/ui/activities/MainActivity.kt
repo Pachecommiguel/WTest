@@ -21,20 +21,38 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+        showLoadingLayer()
 
+        binding.search.setOnQueryTextListener(viewModel)
         binding.addressRecyclerView.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
 
-        supportFragmentManager.beginTransaction().add(android.R.id.content, LoadingLayerFragment(), LoadingLayerFragment.TAG).commit()
-
         viewModel.addressList.observe(this, {
             listAdapter.submitList(it)
-            val fragment = supportFragmentManager.findFragmentByTag(LoadingLayerFragment.TAG)
-            if (fragment != null && it.isNotEmpty()) {
-                supportFragmentManager.beginTransaction().remove(fragment).commit()
+            if (it.isNotEmpty()) {
+                hideLoadingLayer()
             }
         })
+
+        viewModel.filteredList.observe(this, {
+            listAdapter.submitList(it)
+        })
+    }
+
+    private fun showLoadingLayer() {
+        supportFragmentManager.beginTransaction().add(
+            android.R.id.content,
+            LoadingLayerFragment(),
+            LoadingLayerFragment.TAG
+        ).commit()
+    }
+
+    private fun hideLoadingLayer() {
+        val fragment = supportFragmentManager.findFragmentByTag(LoadingLayerFragment.TAG)
+        if (fragment != null) {
+            supportFragmentManager.beginTransaction().remove(fragment).commit()
+        }
     }
 }

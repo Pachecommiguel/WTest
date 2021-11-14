@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Preferences @Inject constructor(
+class PreferencesManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
@@ -21,7 +21,7 @@ class Preferences @Inject constructor(
         return preferences.getBoolean(FIRST_RUN, true)
     }
 
-    fun setFirstTimeLaunch(value: Boolean) {
+    fun setFirstRun(value: Boolean) {
         val preferences = context.getSharedPreferences(NAME, MODE_PRIVATE)
         preferences.edit().putBoolean(FIRST_RUN, value).apply()
     }

@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.MainActivity">
+    tools:context=".ui.activities.MainActivity"
+    android:padding="10dp">
 
     <SearchView
         android:id="@+id/search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"
+        android:queryHint="@string/search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </SearchView>
@@ -21,7 +23,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/search"
-        tools:layout_editor_absoluteX="-16dp"
         tools:listitem="@layout/address_recycler_view_item">
 
     </androidx.recyclerview.widget.RecyclerView>

@@ -9,6 +9,8 @@ class AddressDiffCallback : DiffUtil.ItemCallback<Address>() {
     }
 
     override fun areContentsTheSame(oldItem: Address, newItem: Address): Boolean {
-        return oldItem == newItem
+        return oldItem.location == newItem.location &&
+                oldItem.threeDigits == newItem.threeDigits &&
+                oldItem.fourDigits == newItem.fourDigits
     }
 }

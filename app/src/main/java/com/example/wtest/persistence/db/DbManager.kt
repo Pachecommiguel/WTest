@@ -8,10 +8,8 @@ class DbManager @Inject constructor(
 ) {
 
     fun insertAll(list: List<List<String>?>) {
-        dao.insertAll(
-            list.map {
-                Address(it?.get(0), it?.get(1), it?.get(2))
-            }
-        )
+        dao.insertAll(list.map {
+            Address(it?.get(0), it?.get(1), it?.get(2))
+        })
     }
 }
