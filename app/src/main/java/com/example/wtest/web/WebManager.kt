@@ -1,5 +1,6 @@
 package com.example.wtest.web
 
+import android.util.Log
 import com.example.wtest.persistence.ContentReceiver
 import com.example.wtest.web.responses.BlobResponse
 import com.example.wtest.web.responses.TreeResponse
@@ -41,7 +42,7 @@ class WebManager @Inject constructor(
             }
 
             override fun onFailure(call: Call<TreeResponse>, t: Throwable) {
-                getAddress()
+                Log.e("WTeste", "onFailure" + t.stackTrace)
             }
         })
     }
@@ -56,7 +57,7 @@ class WebManager @Inject constructor(
             }
 
             override fun onFailure(call: Call<BlobResponse>, t: Throwable) {
-                getContent(sha)
+                Log.e("WTeste", "onFailure" + t.stackTrace)
             }
         })
     }
