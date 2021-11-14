@@ -36,9 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.filteredList.observe(this, {
-            listAdapter.submitList(it)
-        })
+        viewModel.filteredList.observe(this, listAdapter::submitList)
     }
 
     private fun showLoadingLayer() {
